@@ -1,47 +1,101 @@
 {
 	"info": {
-		"_postman_id": "e8278457-cb02-4405-8459-8e3cc2b6e79e",
-		"name": "gorest API chaining",
+		"_postman_id": "b0fe8fbe-3ce5-4459-b2fc-82a814508feb",
+		"name": "Demo APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "create new user",
+			"name": "https://reqres.in/api/users?page=2\n\n",
 			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "4a2fb4d5-fd20-4966-8611-7a897244e11b",
-						"exec": [
-							"var random = Math.random().toString(36).substring(2);\r",
-							"var useremail = \"jim\" + random + \"@gmail.com\";\r",
-							"var username = \"jim\" + random;\r",
-							"\r",
-							"pm.environment.set(\"email_env\", useremail);\r",
-							"pm.environment.set(\"name_env\", username);\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "fadfe031-a57b-407c-81f7-e76fd9f536ff",
+						"id": "1015060e-80ed-4eca-b9cd-edf4a7ab70b3",
 						"exec": [
-							"var JsonData=JSON.parse(responseBody);\r",
-							"pm.environment.set(\"userid_env\",JsonData.id);"
+							"tests[\"Validating status code\"]=responseCode.code == 200;\r",
+							"tests[\"Validating response body\"]=responseBody.has(\"Michael\");\r",
+							"var response = JSON.parse(responseBody);\r",
+							"tests[\"total\"]=response.total ==12;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"id": "79347217-b6df-49e3-859c-e3b77e11d306",
+			"id": "f5cba883-a171-4e63-bef7-45ff886dd0dc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2\n\n",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2\n\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://reqres.in/api/users/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0cbc90d-c24a-4ee0-849d-72cd45a1acb1",
+						"exec": [
+							"var response = JSON.parse(responseBody);\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"response_body_string\");\r",
+							"});\r",
+							"tests[\"verify first name\"]=response.data.first_name==\"Janet\";\r",
+							"tests[\"Verify last name\"]=response.data.last_name==\"Weaver\""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "2c3fbfb0-697d-4200-8c6e-395c2b3fd75b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://reqres.in/api/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "https://reqres.in/api/users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5149f1f-902e-4ec6-9645-5365c18ec960",
+						"exec": [
+							"tests[\"Validating Token presence\"]=responseBody.has(\"token\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "acb1ec0e-e311-483f-a888-5f36fa3bffc9",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -50,140 +104,51 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"name\":\"{{name_env}}\",\r\n    \"gender\":\"male\",\r\n    \"email\":\"{{email_env}}\",\r\n    \"status\":\"inactive\"\r\n}",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "https://gorest.co.in/public/v2/users"
+				"url": "https://reqres.in/api/login"
 			},
 			"response": []
 		},
 		{
-			"name": "Get User details",
+			"name": "https://reqres.in/api/login",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "3b1cd81e-33d5-4dec-ab15-e6c1f8b255bf",
+						"id": "a5149f1f-902e-4ec6-9645-5365c18ec960",
 						"exec": [
-							"pm.test(\"validating fields\",()=>{\r",
-							"    var JsonData=pm.response.json();\r",
-							"    pm.expect(JsonData.id).to.eql(pm.environment.get(\"userid_env\"));\r",
-							"    pm.expect(JsonData.email).to.eql(pm.environment.get(\"email_env\"));\r",
-							"    pm.expect(JsonData.name).to.eql(pm.environment.get(\"name_env\"));\r",
-							"});"
+							"tests[\"Validating Token presence\"]=responseBody.has(\"token\");\r",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"id": "1e650c1e-e23f-4a27-b3bd-6aa5d944a084",
+			"id": "745b71cf-dcfa-47cc-aacb-7cabc4c1b747",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "https://gorest.co.in/public/v2/users/{{userid_env}}"
-			},
-			"response": []
-		},
-		{
-			"name": "updateuser",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "152ec8a9-b29e-42b7-992a-cede3d6d638b",
-						"exec": [
-							"var random = Math.random().toString(36).substring(2);\r",
-							"var useremail = \"jim\" + random + \"@gmail.com\";\r",
-							"var username = \"jim\" + random;\r",
-							"\r",
-							"pm.environment.set(\"email_env\", useremail);\r",
-							"pm.environment.set(\"name_env\", username);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "d706e216-db21-44bc-a310-578c37fa9555",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n{\r\n    \"name\":\"{{name_env}}\",\r\n    \"email\":\"{{email_env}}\",\r\n    \"status\":\"active\"\r\n}\r\n    \r\n",
+					"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "https://gorest.co.in/public/v2/users/{{userid_env}}"
+				"url": "https://reqres.in/api/login"
 			},
 			"response": []
-		},
-		{
-			"name": "Delete Request",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "bd68bec5-6399-4640-93eb-cf7dd27ee36d",
-						"exec": [
-							"pm.environment.unset(\"userid_env\");\r",
-							"pm.environment.unset(\"email_env\");\r",
-							"pm.environment.unset(\"name_env\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "83160bd9-e760-4d9b-8091-671742fd779a",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": "https://gorest.co.in/public/v2/users/{{userid_env}}"
-			},
-			"response": []
-		}
-	],
-	"auth": {
-		"type": "bearer",
-		"bearer": {
-			"token": "b8911997c283d2462abc4ba98888aa35032f95262d53445d68d0fc2c34d0fec2"
-		}
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "e316e114-3f8d-400a-8579-99297f89effd",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "0b6f6521-0178-465a-9968-50e5a9b4e1f9",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	]
 }
