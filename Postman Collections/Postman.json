@@ -1,154 +1,390 @@
 {
 	"info": {
-		"_postman_id": "b0fe8fbe-3ce5-4459-b2fc-82a814508feb",
-		"name": "Demo APIs",
+		"_postman_id": "013105ca-89c5-467f-9fd8-1d78ececd976",
+		"name": "Spotify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "https://reqres.in/api/users?page=2\n\n",
-			"event": [
+			"name": "browse categories",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "1015060e-80ed-4eca-b9cd-edf4a7ab70b3",
-						"exec": [
-							"tests[\"Validating status code\"]=responseCode.code == 200;\r",
-							"tests[\"Validating response body\"]=responseBody.has(\"Michael\");\r",
-							"var response = JSON.parse(responseBody);\r",
-							"tests[\"total\"]=response.total ==12;"
-						],
-						"type": "text/javascript"
-					}
+					"name": "New Request",
+					"id": "e6c8d9f5-7bf9-4ed2-8837-4f0b8d798d3d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://api.spotify.com/v1/browse/categories"
+					},
+					"response": []
 				}
 			],
-			"id": "f5cba883-a171-4e63-bef7-45ff886dd0dc",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://reqres.in/api/users?page=2\n\n",
-					"protocol": "https",
-					"host": [
-						"reqres",
-						"in"
-					],
-					"path": [
-						"api",
-						"users"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "2\n\n"
-						}
-					]
-				}
-			},
-			"response": []
+			"id": "d4786f23-ba78-4a45-b1e7-74fe3224b4bd"
 		},
 		{
-			"name": "https://reqres.in/api/users/2",
-			"event": [
+			"name": "Playlists",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "d0cbc90d-c24a-4ee0-849d-72cd45a1acb1",
-						"exec": [
-							"var response = JSON.parse(responseBody);\r",
-							"pm.test(\"Body is correct\", function () {\r",
-							"    pm.response.to.have.body(\"response_body_string\");\r",
-							"});\r",
-							"tests[\"verify first name\"]=response.data.first_name==\"Janet\";\r",
-							"tests[\"Verify last name\"]=response.data.last_name==\"Weaver\""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "2c3fbfb0-697d-4200-8c6e-395c2b3fd75b",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "https://reqres.in/api/users/2"
-			},
-			"response": []
-		},
-		{
-			"name": "https://reqres.in/api/users",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a5149f1f-902e-4ec6-9645-5365c18ec960",
-						"exec": [
-							"tests[\"Validating Token presence\"]=responseBody.has(\"token\");\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "acb1ec0e-e311-483f-a888-5f36fa3bffc9",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"name": "New Request",
+					"id": "1ac7cf06-d3f5-4a70-9e2e-146a4d67e697",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				},
-				"url": "https://reqres.in/api/login"
-			},
-			"response": []
-		},
-		{
-			"name": "https://reqres.in/api/login",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "a5149f1f-902e-4ec6-9645-5365c18ec960",
-						"exec": [
-							"tests[\"Validating Token presence\"]=responseBody.has(\"token\");\r",
-							""
+					"name": "Create Playlist",
+					"id": "8f857bc6-60db-4e63-89cf-9b77af349636",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Demo Playlist\",\r\n    \"description\": \"Sample playlist for Demo\",\r\n    \"public\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.spotify.com/v1/users/:user_id/playlists",
+							"protocol": "https",
+							"host": [
+								"api",
+								"spotify",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								":user_id",
+								"playlists"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{User_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Playlists",
+					"id": "54b7ddf7-0d08-4b6f-90e3-72e95f72fea4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.spotify.com/v1/playlists/:playlistid/tracks?uris=spotify:track:4YLKHaxYieIw6iMVfIvKm7",
+							"protocol": "https",
+							"host": [
+								"api",
+								"spotify",
+								"com"
+							],
+							"path": [
+								"v1",
+								"playlists",
+								":playlistid",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "spotify:track:4YLKHaxYieIw6iMVfIvKm7",
+									"type": "text"
+								}
+							],
+							"variable": [
+								{
+									"key": "playlistid",
+									"value": "0B3wv3V1Bqn4OasIaWoUWw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "d2c9ede4-b97d-46f1-84be-67d84d2880f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "https://api.spotify.com/v1/playlists/37i9dQZF1E3a2vpq4o9cI6",
+					"id": "974abbc1-0dd0-46b9-8b21-2e7e35a2c052",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1POdFZRZbvb...qqillRxMr2z"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Updated Playlist Name\",\r\n    \"description\": \"Updated playlist description\",\r\n    \"public\": false\r\n}"
+						},
+						"url": "https://api.spotify.com/v1/playlists/37i9dQZF1E3a2vpq4o9cI6"
+					},
+					"response": []
+				},
+				{
+					"name": "https://api.spotify.com/v1/users/37i9dQZF1E3a2vpq4o9cI6/playlists",
+					"id": "587b0a7a-d079-4058-bf33-c8b7a7e4fabd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"authUrl": "https://accounts.spotify.com/api/token",
+								"clientId": "4dc4fd322db549da94c40dab9a735757",
+								"scope": "playlist-modify-public",
+								"client_authentication": "header",
+								"grant_type": "implicit",
+								"tokenName": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1POdFZRZbvb...qqillRxMr2z"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Playlist\",\r\n    \"description\": \"New playlist description\",\r\n    \"public\": false\r\n}"
+						},
+						"url": "https://api.spotify.com/v1/users/37i9dQZF1E3a2vpq4o9cI6/playlists"
+					},
+					"response": []
+				},
+				{
+					"name": "https://gorest.co.in/public/v2/users/6805375",
+					"id": "d8597c48-ffc7-4338-8550-3c0a10e441c3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://gorest.co.in/public/v2/users/6805375"
+					},
+					"response": []
+				},
+				{
+					"name": "\nhttps://gorest.co.in/public/v2/users",
+					"id": "2e57af07-0cd0-4c55-8447-4b0501120624",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "b8911997c283d2462abc4ba98888aa35032f95262d53445d68d0fc2c34d0fec2"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"name\":\"Vinitha\",\r\n    \"gender\":\"male\",\r\n    \"email\":\"vini@gmail.com\",\r\n    \"status\":\"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://gorest.co.in/public/v2/users"
+					},
+					"response": []
 				}
 			],
-			"id": "745b71cf-dcfa-47cc-aacb-7cabc4c1b747",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+			"id": "6a9a1e9f-a9ea-4c98-a049-975be01a66c4"
+		},
+		{
+			"name": "Artists",
+			"item": [
+				{
+					"name": "Get Artist",
+					"id": "369b90f2-a248-4724-b21b-a55303d45a4c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://api.spotify.com/v1/artists/64KEffDW9EtZ1y2vBYgq8T"
+					},
+					"response": []
 				},
-				"url": "https://reqres.in/api/login"
-			},
-			"response": []
+				{
+					"name": "Get Artists Album",
+					"id": "1b752a41-e8a7-411a-b432-adf6b0938bd3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://api.spotify.com/v1/artists/64KEffDW9EtZ1y2vBYgq8T/albums"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artists Top tracks",
+					"id": "2ae4c9a7-729a-4061-ad75-64dba36bfb17",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Related Artists",
+					"id": "6602f3c5-620b-435b-b815-641766b5cb8a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://api.spotify.com/v1/artists/64KEffDW9EtZ1y2vBYgq8T/related-artists"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "de632d74-bd35-4cbb-a317-b8e4f90a43c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "cac186b5-41f2-44de-aff7-76cc4bec46f3"
+		},
+		{
+			"name": "Audiobooks",
+			"item": [
+				{
+					"name": "New Request",
+					"id": "9df1a7a1-0098-45d0-91cb-35e75c5ed223",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "a9626986-eba1-4441-bc62-129eb20525b4"
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": {
+			"client_authentication": "header",
+			"grant_type": "client_credentials",
+			"tokenName": "Spotify Bearer Token",
+			"useBrowser": false,
+			"scope": "playlist-read-private,playlist-modify-private,playlist-modify-public",
+			"authUrl": "https://accounts.spotify.com/authorize",
+			"accessTokenUrl": "https://accounts.spotify.com/api/token",
+			"clientSecret": "{{Client Secret}}",
+			"clientId": "{{Client ID}}",
+			"redirect_uri": "https://oauth.pstmn.io/v1/callback",
+			"addTokenTo": "header"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bf556703-f4ec-4e21-bb03-535ff9dc5282",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e4632dc4-bacc-4f4d-9808-20517b427b3a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"value": "",
+			"type": "string"
 		}
 	]
 }
